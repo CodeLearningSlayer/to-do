@@ -1,0 +1,205 @@
+@font-face {
+  font-family: ArodoraPro;
+  font-display: swap;
+  src: url("../fonts/ArodoraPro-Light.woff2") format("woff2"), url("../fonts/ArodoraPro-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: BalooBhai2;
+  font-display: swap;
+  src: url("../fonts/BalooBhai2-Regular.woff2") format("woff2"), url("../fonts/BalooBhai2-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: ArodoraPro;
+  font-display: swap;
+  src: url("../fonts/ArodoraPro-Light.woff2") format("woff2"), url("../fonts/ArodoraPro-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: NicoMoji;
+  font-display: swap;
+  src: url("../fonts/NicoMoji-Regular.woff2") format("woff2"), url("../fonts/NicoMoji-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: NerkoOne;
+  font-display: swap;
+  src: url("../fonts/NerkoOne-Regular.woff2") format("woff2"), url("../fonts/NerkoOne-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: Pacifico;
+  font-display: swap;
+  src: url("../fonts/Pacifico-Regular.woff2") format("woff2"), url("../fonts/Pacifico-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[class] {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1230px;
+  padding: 0 15px;
+}
+
+.start {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.header {
+  margin: 0 auto 36px;
+}
+
+.logo {
+  font-family: NicoMoji;
+  font-size: 52px;
+  padding: 25px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo__img-box {
+  width: 77px;
+  height: 77px;
+  margin-right: 20px;
+  transition: 0.3s;
+  background-image: url("../img/logo/monkey what.svg");
+}
+.logo__img-box:hover {
+  background-image: url("../img/logo/monkey smile.svg");
+}
+.logo__text {
+  display: block;
+  color: #fff;
+}
+
+.content__description {
+  text-align: center;
+  font-size: 48px;
+  font-family: NerkoOne, serif;
+  color: #fff;
+  max-width: 895px;
+  margin: 0 auto 20px;
+}
+.content__try {
+  color: #fff;
+  font-family: Pacifico, serif;
+  margin: 0 auto 25px;
+  font-size: 48px;
+  text-align: center;
+}
+.content__img {
+  margin: 0 auto;
+}
+
+.try__link {
+  color: #fff;
+  animation-name: blink;
+  animation-timing-function: ease-in-out;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.footer {
+  background-color: #9D80EF;
+}
+.footer__contacts {
+  display: flex;
+  justify-content: center;
+}
+.footer__text {
+  text-align: center;
+  font-size: 23px;
+  color: #fff;
+  padding-bottom: 15px;
+}
+
+ul.footer__contacts {
+  padding: 20px 0 10px;
+}
+
+.contacts__item {
+  transition: 0.3s ease;
+}
+.contacts__item + .contacts__item {
+  margin-left: 10px;
+}
+.contacts__item:hover {
+  margin-top: -5px;
+}
