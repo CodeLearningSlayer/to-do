@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+    <div class="app">
+        <div class="app__left-side left-side">
+            <a class="logo" href="#">
+                <div class="logo__img-box"></div>
+                <span class="logo__text">RBTSV</span>
+            </a>
+            <div class="left-side__inner">
+                <h6 class="left-side__title">Collections</h6>
+                <ul class="left-side__nav nav">
+                    <li class="nav__item">
+                        <div class="nav__item-tab nav__item-tab--daily">Daily</div>
+                    </li>
+                    <li class="nav__item">
+                        <div class="nav__item-tab nav__item-tab--today">Today</div>
+                    </li>
+                    <li class="nav__item">
+                        <div class="nav__item-tab nav__item-tab--plans">Plans</div>
+                    </li>   
+                </ul>
+            </div>
+        </div>
+        <div class="app__right-side right-side">   
+            <form action="" class="rigt-side__form add-form">
+                <div class="add-form__inner">
+                    <div class="input__wrapper">
+                        <input type="text" class="add-form__input" placeholder="Add a task">
+                    </div>
+                </div>
+            </form>
+
+            <div class="right-side__tasks tasks">
+                <h6 class="tasks__title">Tasks - 3</h6>
+                <ul class="tasks__items">
+                    <li class="tasks__item task">
+                        <div class="task__inner">
+                            <label class="task__label">
+                                <input type="checkbox" class="task__checkbox" name = "task">
+                                Marry Polina
+                            </label>
+                        </div>
+                    </li>
+                    <li class="tasks__item task">
+                        <div class="task__inner">
+                            <label  class="task__label">
+                                <input type="checkbox" class="task__checkbox">
+                                Marry Polina
+                            </label>
+                        </div>
+                    </li>
+                    <li class="tasks__item task">
+                        <div class="task__inner">
+                            <label class="task__label">
+                                <input type="checkbox" class="task__checkbox">
+                                Marry Polina
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="right-side__completed completed"> 
+                <h6 class="completed__title">Completed - 2</h6>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

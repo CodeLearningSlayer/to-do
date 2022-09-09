@@ -6,17 +6,17 @@
   font-style: normal;
 }
 @font-face {
-  font-family: BalooBhai2;
-  font-display: swap;
-  src: url("../fonts/BalooBhai2-Regular.woff2") format("woff2"), url("../fonts/BalooBhai2-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
   font-family: ArodoraPro;
   font-display: swap;
   src: url("../fonts/ArodoraPro-Light.woff2") format("woff2"), url("../fonts/ArodoraPro-Light.woff") format("woff");
   font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: AnonymousPro;
+  font-display: swap;
+  src: url("../fonts/AnonymousPro-Regular.woff2") format("woff2"), url("../fonts/AnonymousPro-Regular.woff") format("woff");
+  font-weight: 400;
   font-style: normal;
 }
 @font-face {
@@ -27,10 +27,38 @@
   font-style: normal;
 }
 @font-face {
+  font-family: BalooBhai2;
+  font-display: swap;
+  src: url("../fonts/BalooBhai2-Regular.woff2") format("woff2"), url("../fonts/BalooBhai2-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: NotoSans;
+  font-display: swap;
+  src: url("../fonts/NotoSans-Bold.woff2") format("woff2"), url("../fonts/NotoSans-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
   font-family: NerkoOne;
   font-display: swap;
   src: url("../fonts/NerkoOne-Regular.woff2") format("woff2"), url("../fonts/NerkoOne-Regular.woff") format("woff");
   font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: Raleway;
+  font-display: swap;
+  src: url("../fonts/Raleway-Bold.woff2") format("woff2"), url("../fonts/Raleway-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: NotoSans;
+  font-display: swap;
+  src: url("../fonts/NotoSans-SemiBold.woff2") format("woff2"), url("../fonts/NotoSans-SemiBold.woff") format("woff");
+  font-weight: 600;
   font-style: normal;
 }
 @font-face {
@@ -94,10 +122,152 @@ a {
   text-decoration: none;
 }
 
+* {
+  color: #fff;
+}
+
 .container {
   margin: 0 auto;
   max-width: 1230px;
   padding: 0 15px;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute;
+  z-index: 200;
+  top: 0;
+  right: -200%;
+  width: 100%;
+  height: 100%;
+  background: #282828;
+  transition: right 0.7s;
+}
+body.transition::before {
+  right: 0;
+}
+
+.preloader {
+  background: #282828;
+  position: fixed;
+  transition: all 0.5s;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  transition: right 0.5s;
+}
+.preloader svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
+.preloader .stroke-still {
+  stroke: #232323;
+}
+.preloader .stroke-animation {
+  animation: stroke-spacing 1.2s ease-in, stroke-color 4.8s linear;
+  animation-iteration-count: infinite;
+  animation-delay: 0;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  transform-origin: center center;
+}
+@-webkit-keyframes stroke-spacing {
+  0% {
+    stroke-dasharray: 0 200;
+  }
+  45% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 200 200;
+  }
+  90% {
+    stroke-dashoffset: -200;
+    stroke-dasharray: 200 200;
+  }
+  100% {
+    stroke-dashoffset: -200;
+    stroke-dasharray: 200 200;
+  }
+}
+@keyframes stroke-spacing {
+  0% {
+    stroke-dasharray: 0 200;
+  }
+  45% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 200 200;
+  }
+  90% {
+    stroke-dashoffset: -200;
+    stroke-dasharray: 200 200;
+  }
+  100% {
+    stroke-dashoffset: -200;
+    stroke-dasharray: 200 200;
+  }
+}
+@-webkit-keyframes stroke-color {
+  0% {
+    stroke: #3498DB;
+  }
+  24% {
+    stroke: #643232;
+  }
+  25% {
+    stroke: #327864;
+  }
+  49% {
+    stroke: #327864;
+  }
+  50% {
+    stroke: #32326e;
+  }
+  74% {
+    stroke: #32326e;
+  }
+  75% {
+    stroke: #78325a;
+  }
+  99% {
+    stroke: #78325a;
+  }
+}
+@keyframes stroke-color {
+  0% {
+    stroke: #3498DB;
+  }
+  24% {
+    stroke: #643232;
+  }
+  25% {
+    stroke: #327864;
+  }
+  49% {
+    stroke: #327864;
+  }
+  50% {
+    stroke: #32326e;
+  }
+  74% {
+    stroke: #32326e;
+  }
+  75% {
+    stroke: #78325a;
+  }
+  99% {
+    stroke: #78325a;
+  }
+}
+.preloader--hide {
+  position: absolute;
+  right: -200%;
 }
 
 .start {
@@ -144,6 +314,9 @@ a {
   color: #fff;
 }
 
+.content {
+  text-align: center;
+}
 .content__description {
   text-align: center;
   font-size: 48px;
@@ -151,6 +324,29 @@ a {
   color: #fff;
   max-width: 895px;
   margin: 0 auto 20px;
+}
+.content .line-1 {
+  overflow: hidden;
+  border-right: 0.15em solid #fff;
+  white-space: nowrap;
+  animation: typing 3s steps(45), blink-caret 0.5s step-end running infinite;
+}
+.content .line-1--typed {
+  border-right: none;
+}
+.content .line-2 {
+  display: inline-block;
+  overflow: hidden;
+  width: 0;
+  white-space: nowrap;
+}
+.content .line-2--animated {
+  width: auto;
+  border-right: 0.15em solid #fff;
+  animation: typing 3s steps(45), blink-caret 0.5s step-end infinite;
+}
+.content .line-2--typed {
+  border-right: none;
 }
 .content__try {
   color: #fff;
@@ -163,17 +359,38 @@ a {
   margin: 0 auto;
 }
 
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
 .try__link {
+  opacity: 0;
   color: #fff;
   animation-name: blink;
   animation-timing-function: ease-in-out;
   animation-duration: 3s;
   animation-iteration-count: infinite;
+  animation-play-state: paused;
+}
+.try__link--animated {
+  animation-play-state: running;
 }
 
 @keyframes blink {
   50% {
-    opacity: 0;
+    opacity: 1;
   }
 }
 .footer {
@@ -202,4 +419,129 @@ ul.footer__contacts {
 }
 .contacts__item:hover {
   margin-top: -5px;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+.app__left-side {
+  max-width: 400px;
+  background-color: #202020;
+}
+
+.left-side .logo {
+  padding: 25px 30px;
+  margin-bottom: 80px;
+  font-size: 40px;
+}
+.left-side__inner {
+  padding-left: 25px;
+}
+.left-side__title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-family: NotoSans, serif;
+  font-weight: 600;
+}
+
+.nav__item + .nav__item {
+  margin-top: 33px;
+}
+.nav__item-tab {
+  font-size: 32px;
+  font-family: NotoSans, serif;
+  font-weight: 500;
+  padding-left: 65px;
+  cursor: pointer;
+  position: relative;
+}
+.nav__item-tab::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 17px;
+}
+.nav__item-tab--daily::before {
+  background: url("../img/icons/daily.svg") #7F9EEE no-repeat center;
+}
+.nav__item-tab--today::before {
+  background: url("../img/icons/today.svg") #FF4D4D no-repeat center;
+}
+.nav__item-tab--plans::before {
+  background: url("../img/icons/plans.svg") #BFF055 no-repeat center;
+}
+
+.right-side {
+  background-color: #2C2C2C;
+  width: 100%;
+  padding: 30px 60px 60px 130px;
+}
+
+.add-form {
+  margin-bottom: 100px;
+}
+.add-form__inner {
+  width: 100%;
+  padding: 20px 15px 15px;
+  border: 1px solid #FFFFFF;
+  border-radius: 45px;
+  min-height: 72px;
+}
+.add-form__input {
+  background-color: transparent;
+  text-decoration: none;
+  outline: none;
+  width: 100%;
+  border: none;
+  font-size: 32px;
+  font-family: AnonymousPro, serif;
+}
+
+.input__wrapper {
+  padding-left: 60px;
+  position: relative;
+}
+.input__wrapper::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: -2px;
+  top: -10px;
+  background-image: url("../img/add circle.svg");
+}
+
+.tasks {
+  margin-bottom: 150px;
+}
+.tasks__title {
+  font-family: NotoSans, serif;
+  font-weight: 600;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+.task {
+  background-color: #232323;
+  border-radius: 15px;
+}
+.task + .task {
+  margin-top: 20px;
+}
+.task__label {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: Raleway, serif;
+}
+.task__inner {
+  padding: 25px 20px;
+}
+
+.completed__title {
+  font-size: 28px;
+  font-family: NotoSans, serif;
+  font-weight: 700;
 }

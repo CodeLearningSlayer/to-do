@@ -6,17 +6,17 @@
 	font-style: normal
 ;}
 @font-face {
-	font-family: BalooBhai2;
-	font-display: swap;
-	src: url("../fonts/BalooBhai2-Regular.woff2") format("woff2"), url("../fonts/BalooBhai2-Regular.woff") format("woff");
-	font-weight: 400;
-	font-style: normal
-;}
-@font-face {
 	font-family: ArodoraPro;
 	font-display: swap;
 	src: url("../fonts/ArodoraPro-Light.woff2") format("woff2"), url("../fonts/ArodoraPro-Light.woff") format("woff");
 	font-weight: 300;
+	font-style: normal
+;}
+@font-face {
+	font-family: AnonymousPro;
+	font-display: swap;
+	src: url("../fonts/AnonymousPro-Regular.woff2") format("woff2"), url("../fonts/AnonymousPro-Regular.woff") format("woff");
+	font-weight: 400;
 	font-style: normal
 ;}
 @font-face {
@@ -27,10 +27,38 @@
 	font-style: normal
 ;}
 @font-face {
+	font-family: BalooBhai2;
+	font-display: swap;
+	src: url("../fonts/BalooBhai2-Regular.woff2") format("woff2"), url("../fonts/BalooBhai2-Regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal
+;}
+@font-face {
+	font-family: NotoSans;
+	font-display: swap;
+	src: url("../fonts/NotoSans-Bold.woff2") format("woff2"), url("../fonts/NotoSans-Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal
+;}
+@font-face {
 	font-family: NerkoOne;
 	font-display: swap;
 	src: url("../fonts/NerkoOne-Regular.woff2") format("woff2"), url("../fonts/NerkoOne-Regular.woff") format("woff");
 	font-weight: 400;
+	font-style: normal
+;}
+@font-face {
+	font-family: Raleway;
+	font-display: swap;
+	src: url("../fonts/Raleway-Bold.woff2") format("woff2"), url("../fonts/Raleway-Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal
+;}
+@font-face {
+	font-family: NotoSans;
+	font-display: swap;
+	src: url("../fonts/NotoSans-SemiBold.woff2") format("woff2"), url("../fonts/NotoSans-SemiBold.woff") format("woff");
+	font-weight: 600;
 	font-style: normal
 ;}
 @font-face {

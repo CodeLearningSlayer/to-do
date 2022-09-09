@@ -4,6 +4,123 @@
 @import "libs";
 @import "global";
 
+
+body{
+    overflow-x: hidden;
+    position: relative;
+    &::before{
+        content:"";
+        position: absolute;
+        z-index: 200;
+        top:0;
+        right: -200%;
+        width: 100%;
+        height: 100%;
+        background: #282828;
+        transition: right .7s;
+    }
+    &.transition{
+        &::before{
+            right: 0;
+        }
+    }
+    
+}
+
+
+.preloader{
+    background: #282828;
+    position: fixed;
+    transition: all .5s;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    transition: right .5s;
+    svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    }
+    .stroke-still {
+        stroke: #232323;
+    }
+
+    .stroke-animation {
+        animation: stroke-spacing 1.2s ease-in, stroke-color 4.8s linear;
+        animation-iteration-count: infinite;
+        animation-delay: 0;
+        animation-direction: normal;
+        animation-fill-mode: forwards;
+        animation-play-state: running;
+        transform-origin: center center;
+        }
+        
+        @-webkit-keyframes stroke-spacing {
+        0% {
+            stroke-dasharray: 0 200;
+        }
+        45% {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 200 200;
+        }
+        90% {
+            stroke-dashoffset: -200;
+            stroke-dasharray: 200 200;
+        }
+        100% {
+            stroke-dashoffset: -200;
+            stroke-dasharray: 200 200;
+        }
+        }
+        
+        @keyframes stroke-spacing {
+        0% {
+            stroke-dasharray: 0 200;
+        }
+        45% {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 200 200;
+        }
+        90% {
+            stroke-dashoffset: -200;
+            stroke-dasharray: 200 200;
+        }
+        100% {
+            stroke-dashoffset: -200;
+            stroke-dasharray: 200 200;
+        }
+        }
+        
+        @-webkit-keyframes stroke-color {
+        0%  { stroke: #3498DB; }
+        24% { stroke: #643232; }
+        25% { stroke: #327864; }
+        49% { stroke: #327864; }
+        50% { stroke: #32326e; }
+        74% { stroke: #32326e; }
+        75% { stroke: #78325a; }
+        99% { stroke: #78325a; }
+        }
+        
+        @keyframes stroke-color {
+        0%  { stroke: #3498DB; }
+        24% { stroke: #643232; }
+        25% { stroke: #327864; }
+        49% { stroke: #327864; }
+        50% { stroke: #32326e; }
+        74% { stroke: #32326e; }
+        75% { stroke: #78325a; }
+        99% { stroke: #78325a; }
+        }
+    &--hide{
+        position: absolute;
+        right:-200%;
+    }
+}
+
+
 .start{
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
@@ -50,6 +167,7 @@
 }
 
 .content{
+    text-align: center;
     &__description{
         text-align: center;
         font-size: 48px;
@@ -58,32 +176,74 @@
         max-width: 895px;
         margin: 0 auto 20px;
     }
+    .line-1{
+        overflow: hidden;
+        
+        border-right: .15em solid #fff;
+        white-space: nowrap;
+        animation: typing 3s steps(45),
+                   blink-caret .5s step-end running infinite;
+        &--typed{
+            border-right: none;
+        }
+    }
+
+    .line-2{
+        display: inline-block;
+        overflow: hidden;
+        width: 0;
+        white-space: nowrap;
+        &--animated{
+            width: auto;
+            border-right: .15em solid #fff;
+            animation: typing 3s steps(45),
+                   blink-caret .5s step-end infinite;
+        }
+        &--typed{
+            border-right: none;
+        }
+    }
+
     &__try{
         color: #fff;
         font-family: Pacifico, serif;
         margin: 0 auto 25px;
         font-size: 48px;
         text-align: center;
-
     }
     &__img{
         margin: 0 auto;
     }
 }
 
-.try{
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange }
+  }
+
+  .try{
     &__link{
+        opacity: 0;
         color: #fff;
         animation-name: blink;
         animation-timing-function: ease-in-out;
         animation-duration: 3s;
         animation-iteration-count: infinite;
+        animation-play-state: paused;
+        &--animated{
+            animation-play-state: running;
+        }
     }
 }
 
 @keyframes blink{
     50%{
-        opacity: 0;
+        opacity: 1;
     }
 }
 
@@ -114,6 +274,145 @@ ul.footer__contacts{
         &:hover{
             margin-top: -5px;
         }
+    }
+}
+
+.app{
+    display: flex;
+    height: 100vh;
+    &__left-side{
+        max-width: 400px;
+        background-color: #202020;
+    }
+}
+
+.left-side{
+    .logo{
+        padding: 25px 30px;
+        margin-bottom: 80px;
+        font-size: 40px;
+    }
+    &__inner{
+        padding-left: 25px;
+    }
+    &__title{
+        font-size: 28px;
+        margin-bottom: 30px;
+        font-family: NotoSans, serif;
+        font-weight: 600;
+    }
+}
+
+.nav{
+    &__item +.nav__item{
+        margin-top: 33px;
+    }
+    &__item-tab{
+        font-size: 32px;
+        font-family: NotoSans, serif;
+        font-weight: 500;
+        padding-left: 65px; 
+        cursor: pointer;
+        position: relative;
+        &::before{
+            content:"";
+            position: absolute;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 17px;
+        }
+        &--daily{
+            &::before{
+                background: url("@img/icons/daily.svg") #7F9EEE no-repeat center ;
+            }
+        }
+        &--today{
+            &::before{
+                background: url("@img/icons/today.svg") #FF4D4D no-repeat center ;
+            }
+        }
+        &--plans{
+            &::before{
+                background: url("@img/icons/plans.svg") #BFF055 no-repeat center ;
+            }
+        }
+    }
+}
+
+.right-side{
+    background-color: #2C2C2C;
+    width: 100%;
+    padding: 30px 60px 60px 130px;
+}
+
+.add-form{
+    &__inner{
+        width: 100%;
+        padding: 20px 15px 15px;
+        border: 1px solid #FFFFFF;
+        border-radius:45px;
+        min-height: 72px;
+    }
+    &__input{
+        background-color: transparent;
+        text-decoration: none;
+        outline: none;
+        width: 100%;
+        border:none;
+        font-size: 32px;
+        font-family: AnonymousPro, serif;
+    }
+    margin-bottom: 100px;
+}
+
+.input__wrapper{
+    padding-left: 60px;
+    position: relative;
+    &::before{
+        content:"";
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: -2px;
+        top:-10px;
+        background-image: url("@img/add circle.svg");
+    }
+
+}
+
+.tasks{
+    &__title{
+        font-family: NotoSans, serif;
+        font-weight: 600;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+    margin-bottom: 150px;
+}
+
+.task{
+    background-color: #232323;
+    border-radius: 15px;
+    &+.task{
+        margin-top: 20px;
+    }
+    &__label{
+        font-size: 24px;
+        font-weight: 700;
+        font-family: Raleway, serif;
+    }
+    &__inner{
+        padding: 25px 20px;
+
+    }
+}
+
+.completed{
+    &__title{
+        font-size: 28px;
+        font-family: NotoSans, serif;
+        font-weight: 700;
     }
 }
 
