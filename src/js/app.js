@@ -1,4 +1,6 @@
 import * as flsFunctions from "./modules/functions.js";
+import barba from "@barba/core";
+import  getApp from "./modules/getApp.js";
 
 window.addEventListener("DOMContentLoaded", ()=>{
 
@@ -20,45 +22,79 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
     console.log(preloader);
 
-    
-    firstAnimLine.addEventListener("animationend", function(e){
-        firstAnimLine.classList.add("line-1--typed");
-        secondAnimLine.classList.add("line-2--animated");
-    });
-    
-    secondAnimLine.addEventListener("animationend", function(e){
-        secondAnimLine.classList.add("line-2--typed");
-        tryLink.classList.add("try__link--animated");
-    });
-    
-    tryLink.addEventListener("click", ()=>{
-        
+
+    function pageTransition(){
         document.body.classList.add("transition");
         const childs = Array.from(document.body.children);
-
-
         const hidePreloder = new Promise( async (resolve) => {
             const addPreloader = await setTimeout(() => {
                 document.body.prepend(preloader);
+                resolve();
             }, 800);
-            resolve();
         });
 
         hidePreloder.then(()=>{
             setTimeout(() => {
                 preloader.classList.add("preloader--hide");
                 childs.forEach((child) => child.remove());
-            }, 2000);
+            }, 1000);
+            document.body.classList.add("animated");
         });
         
-        
+    }
+    
+    try{
+            firstAnimLine.addEventListener("animationend", function(e){
+            firstAnimLine.classList.add("line-1--typed");
+            secondAnimLine.classList.add("line-2--animated");
+        });
+    }
 
+    catch{};
+    
+
+    try{
+        secondAnimLine.addEventListener("animationend", function(e){
+            secondAnimLine.classList.add("line-2--typed");
+            tryLink.classList.add("try__link--animated");
+        });
+    }
+    catch{};
+    
+    
+    // tryLink.addEventListener("click", pageTransition);
+
+    function delay(n){
+        n = n ?? 2000;
+        return new Promise(done => {
+            setTimeout(()=>{
+                done();
+            }, n);
+        });
+    }
+
+
+    barba.init({
+        sync: true,
+
+        transitions: [
+            {
+                name:'swipe-transition',
+                async leave(){
+                    const done = this.async();
+
+                    pageTransition();
+                    await delay(1500);
+                    done();
+
+                }
+            }
+        ]
 
     });
 
-
 });
 
+getApp();
 
-
-flsFunctions.testWebP();
+// flsFunctions.testWebP();

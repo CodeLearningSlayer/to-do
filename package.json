@@ -13,6 +13,7 @@
   "type": "module",
   "license": "ISC",
   "devDependencies": {
+    "@barba/core": "^2.9.7",
     "del": "^6.1.1",
     "gulp": "^4.0.2"
   },
@@ -37,6 +38,7 @@
     "gulp-webp-html-nosvg": "^1.1.1",
     "gulp-webpcss": "^1.1.1",
     "gulp-zip": "^5.1.0",
+    "json-server": "^0.17.0",
     "sass": "^1.52.2",
     "webp-converter": "^2.2.3",
     "webpack": "^5.73.0",
