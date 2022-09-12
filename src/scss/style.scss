@@ -24,12 +24,7 @@ body{
             right: 0;
         }
     }
-    &.animated{
-        &::before{
-            content: none;
-            display: none;
-        }
-    }
+    
     
 }
 
@@ -285,11 +280,12 @@ ul.footer__contacts{
 
 .app{
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     &__left-side{
         max-width: 400px;
         background-color: #202020;
     }
+
 }
 
 .left-side{
@@ -359,6 +355,7 @@ ul.footer__contacts{
         border: 1px solid #FFFFFF;
         border-radius:45px;
         min-height: 72px;
+        margin-bottom: 50px;
     }
     &__input{
         background-color: transparent;
@@ -369,7 +366,6 @@ ul.footer__contacts{
         font-size: 32px;
         font-family: AnonymousPro, serif;
     }
-    margin-bottom: 100px;
 }
 
 .input__wrapper{
@@ -392,9 +388,10 @@ ul.footer__contacts{
         font-family: NotoSans, serif;
         font-weight: 600;
         margin-bottom: 30px;
+        margin-top:25px;
         font-size: 28px;
     }
-    margin-bottom: 150px;
+    margin-bottom: 75px;
 }
 
 .task{
@@ -421,9 +418,9 @@ ul.footer__contacts{
         width: 100%;
     }
     &__checkbox-styled{
-        content:"";
         display: inline-block;
         width: 1.2em;
+        margin-right: 10px;
         height: 1.2em;
         border: 2px solid #F84343;
         border-radius:9px;
@@ -459,6 +456,10 @@ ul.footer__contacts{
         font-size: 28px;
         font-family: NotoSans, serif;
         font-weight: 700;
+        margin-bottom: 30px;
+    }
+    &__items{
+        text-decoration: line-through;
     }
 }
 
