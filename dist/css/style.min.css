@@ -435,10 +435,10 @@ ul.footer__contacts {
   margin-bottom: 80px;
   font-size: 40px;
 }
-.left-side__inner {
+.left-side .collections {
   padding-left: 25px;
 }
-.left-side__title {
+.left-side .collections__title {
   font-size: 28px;
   margin-bottom: 30px;
   font-family: NotoSans, serif;
@@ -448,7 +448,7 @@ ul.footer__contacts {
 .nav__item + .nav__item {
   margin-top: 33px;
 }
-.nav__item-tab {
+.nav__item {
   font-size: 32px;
   font-family: NotoSans, serif;
   font-weight: 500;
@@ -456,7 +456,7 @@ ul.footer__contacts {
   cursor: pointer;
   position: relative;
 }
-.nav__item-tab::before {
+.nav__item::before {
   content: "";
   position: absolute;
   left: 0;
@@ -464,14 +464,23 @@ ul.footer__contacts {
   height: 50px;
   border-radius: 17px;
 }
-.nav__item-tab--daily::before {
+.nav__item--daily::before {
   background: url("../img/icons/daily.svg") #7F9EEE no-repeat center;
 }
-.nav__item-tab--today::before {
+.nav__item--daily.nav__item--active {
+  color: #3498DB;
+}
+.nav__item--today::before {
   background: url("../img/icons/today.svg") #FF4D4D no-repeat center;
 }
-.nav__item-tab--plans::before {
+.nav__item--today.nav__item--active {
+  color: #FF4D4D;
+}
+.nav__item--plans::before {
   background: url("../img/icons/plans.svg") #BFF055 no-repeat center;
+}
+.nav__item--plans.nav__item--active {
+  color: #BFF055;
 }
 
 .right-side {

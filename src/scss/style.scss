@@ -294,14 +294,14 @@ ul.footer__contacts{
         margin-bottom: 80px;
         font-size: 40px;
     }
-    &__inner{
+    .collections{
         padding-left: 25px;
-    }
-    &__title{
-        font-size: 28px;
-        margin-bottom: 30px;
-        font-family: NotoSans, serif;
-        font-weight: 600;
+        &__title{
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-family: NotoSans, serif;
+            font-weight: 600;
+        }
     }
 }
 
@@ -309,7 +309,7 @@ ul.footer__contacts{
     &__item +.nav__item{
         margin-top: 33px;
     }
-    &__item-tab{
+    &__item{
         font-size: 32px;
         font-family: NotoSans, serif;
         font-weight: 500;
@@ -328,15 +328,24 @@ ul.footer__contacts{
             &::before{
                 background: url("@img/icons/daily.svg") #7F9EEE no-repeat center ;
             }
+            &.nav__item--active{
+                color:#3498DB;
+            }
         }
         &--today{
             &::before{
                 background: url("@img/icons/today.svg") #FF4D4D no-repeat center ;
             }
+            &.nav__item--active{
+                color:#FF4D4D;
+            }
         }
         &--plans{
             &::before{
                 background: url("@img/icons/plans.svg") #BFF055 no-repeat center ;
+            }
+            &.nav__item--active{
+                color:#BFF055;
             }
         }
     }
