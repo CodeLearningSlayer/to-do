@@ -99,6 +99,7 @@ export default function getApp(){
             this.collection = collection;
             this.visibleToDoList = [];
             this.visibleCompletedList = [];
+            this.currentFilter = "daily";
         }
 
         createAddInput(parentSelector){
@@ -122,12 +123,14 @@ export default function getApp(){
 
             addInputForm.addEventListener("keydown", (e)=>{
                 if (e.target.className === input.className && e.code === "Enter"){
-                    let newTask = new Task(e.target.value, document.querySelector(".nav__item--active").textContent.toLowerCase(), this.toDoList);
-
+                    let type = document.querySelector(".nav__item--active").textContent.toLowerCase();
+                    let newTask = new Task(e.target.value, type, this.toDoList);
+                    console.log(newTask);
                     this.toDo.push(newTask);
-                    this.renderList(this.toDo);
-                    this.refreshTaskCount(".tasks__title", "toDo");
+                    // переинициализировать visibleToDoList
+                    this.reInitFilters(type);
                     this.createListeners(this.toDo);
+                    this.renderWindow(this.visibleToDoList);
                 }
             });
             
@@ -158,17 +161,18 @@ export default function getApp(){
             document.querySelector(parentSelector).append(this.completedList);
         }
 
-        renderWindow(firstList, secondList){
+        renderWindow(...lists){
+            lists.forEach(list => {
+                this.renderList(list);
+                this.createListeners(list);
+            });
             
-            this.renderList(firstList);
-            this.renderList(secondList);
-
-            this.createListeners(firstList);
-            this.createListeners(secondList);
 
             this.refreshTaskCount(".tasks__title", "toDo");
             this.refreshTaskCount(".completed__title", "completed");
         }
+
+        
 
         refreshTaskCount(selector, type){
             if(type === "toDo"){
@@ -231,37 +235,48 @@ export default function getApp(){
             document.querySelector(parentSelector).append(collections);
 
             collections.addEventListener("click", (e)=>{
+
                 if (e.target.classList.contains("nav__item--daily")){
-
-                    this.visibleToDoList = this.toDo.filter(task => task.type === "daily");
-                    this.visibleCompletedList = this.completed.filter(task => task.type === "daily");
-
-                    console.log(this.visibleToDoList);
-                    console.log(this.visibleCompletedList);
-
-                    this.renderWindow(this.visibleToDoList, this.visibleCompletedList);
+                    this.currentFilter = "daily";
+                    this.reInitFilters("daily");
 
                 }
                 if (e.target.classList.contains("nav__item--today")){
-                
-                    this.visibleToDoList = this.toDo.filter(task => task.type === "today");
-                    this.visibleCompletedList = this.completed.filter(task => task.type === "today");
-
-                    this.renderWindow(this.visibleToDoList, this.visibleCompletedList);
+            
+                    this.currentFilter = "today";
+                    this.reInitFilters("today");
 
 
                 }
                 if (e.target.classList.contains("nav__item--plans")){
                     
-                    this.visibleToDoList = this.toDo.filter(task => task.type === "plans");
-                    this.visibleCompletedList = this.completed.filter(task => task.type === "plans");
-
-                    this.renderWindow(this.visibleToDoList, this.visibleCompletedList);
-
+                    this.currentFilter = "plans";
+                    this.reInitFilters("plans");
                 }
             });
+
+            this.reInitFilters("daily");
+
+
         }
 
+        reInitFilters(type){
+            if(type === "daily"){
+               this.visibleToDoList = this.toDo.filter(task => task.type === type);
+                this.visibleCompletedList = this.completed.filter(task => task.type === type);
+
+            }
+            else if(type === "today"){
+                this.visibleToDoList = this.toDo.filter(task => task.type === type);
+                this.visibleCompletedList = this.completed.filter(task => task.type === type);
+
+            }
+            else{
+                this.visibleToDoList = this.toDo.filter(task => task.type === type);
+                this.visibleCompletedList = this.completed.filter(task => task.type === type);
+            }
+            this.renderWindow(this.visibleToDoList, this.visibleCompletedList);
+        }
 
         createList(data, stateOfTasks){ //создание списка объектов задач
             data.forEach(task => {
@@ -288,8 +303,9 @@ export default function getApp(){
             this.refreshTaskCount(".tasks__title", "toDo");
             this.refreshTaskCount(".completed__title", "completed");
 
-            this.renderList(tasksArr);
-            this.createListeners(tasksArr);
+            console.log(tasksArr);
+
+            this.reInitFilters(this.currentFilter);
 
         }
 
@@ -308,11 +324,15 @@ export default function getApp(){
         createListeners(tasksArr){ //создание обработчиков событий для удаления из списка
             tasksArr.forEach(task => {
                 task.elem.addEventListener("delete", () => {
-                    this.removeTask(task, tasksArr);
+                    if(task.isCompleted){
+                        this.removeTask(task, this.completed);
+                    }
+                    else{
+                        this.removeTask(task, this.toDo);
+                    }
                 });
 
                 task.elem.addEventListener("changeState", () => {
-                    console.log(task);
                     if(task.isCompleted){
                         console.log(task.text + " completed");
                         task.replace(this.completedList);
@@ -320,46 +340,34 @@ export default function getApp(){
                         this.toDo.splice(this.toDo.indexOf(task), 1);
                     }
                     else{
+                        
                         console.log(task.text + " is not completed");
                         this.toDo.push(task);
                         task.replace(this.toDoList);
                         this.completed.splice(this.completed.indexOf(task), 1);
+                        console.log(this.completed + " невыполненные");
                     }
-
-                    this.renderList(this.toDo);
-                    this.createListeners(this.toDo);
-
-                    this.renderList(this.completed);
-                    this.createListeners(this.completed);
-
-                    this.refreshTaskCount(".tasks__title", "toDo");
-                    this.refreshTaskCount(".completed__title", "completed");
-                
+                    this.reInitFilters(this.currentFilter);
                 });
-
+                
             });
         }
             
 
         async start(){
-            this.addCollections(".left-side");
             this.createAddInput(".right-side");
             
             this.createToDoList(".right-side .tasks");
             this.createCompletedList(".completed");
-
+            
             await this.getData('http://localhost:4000/toDo', "toDo");
             await this.getData('http://localhost:4000/completed', "completed");
+            
+            this.addCollections(".left-side");
 
-            this.refreshTaskCount(".tasks__title", "toDo");
-            this.refreshTaskCount(".completed__title", "completed");
+            // this.refreshTaskCount(".tasks__title", "toDo");
+            // this.refreshTaskCount(".completed__title", "completed");
 
-
-            this.renderList(this.toDo);
-            this.createListeners(this.toDo);
-
-            this.renderList(this.completed);
-            this.createListeners(this.completed);
         }
 
     }

@@ -379,12 +379,14 @@ body.transition::before {
   opacity: 0;
   color: #fff;
   animation-name: blink;
+  visibility: hidden;
   animation-timing-function: ease-in-out;
   animation-duration: 3s;
   animation-iteration-count: infinite;
   animation-play-state: paused;
 }
 .try__link--animated {
+  visibility: visible;
   animation-play-state: running;
 }
 
@@ -574,6 +576,7 @@ ul.footer__contacts {
   background-size: cover;
 }
 .task__edit {
+  display: none;
   cursor: pointer;
   width: 20px;
   height: 20px;

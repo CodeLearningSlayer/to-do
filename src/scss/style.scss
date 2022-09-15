@@ -232,11 +232,13 @@ body{
         opacity: 0;
         color: #fff;
         animation-name: blink;
+        visibility: hidden;
         animation-timing-function: ease-in-out;
         animation-duration: 3s;
         animation-iteration-count: infinite;
         animation-play-state: paused;
         &--animated{
+            visibility: visible;
             animation-play-state: running;
         }
     }
@@ -446,6 +448,7 @@ ul.footer__contacts{
         background-size: cover;
     }
     &__edit{
+        display: none;
         cursor: pointer;
         width: 20px;
         height: 20px;
@@ -471,5 +474,6 @@ ul.footer__contacts{
         text-decoration: line-through;
     }
 }
+
 
 @import "media";
