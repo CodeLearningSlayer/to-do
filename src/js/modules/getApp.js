@@ -1,5 +1,4 @@
-import { getTasks, postTask } from "../services/getAndSend.js";
-import { deleteTask } from "../services/getAndSend.js";
+import { getTasks, postTask, updateTask, deleteTask } from "../services/getAndSend.js";
 
 
 export default function getApp(){
@@ -52,6 +51,10 @@ export default function getApp(){
                     // task.remove(); // здесь как-то передать this в removeTask
                     const remove = new Event("delete");
                     task.dispatchEvent(remove); //запускать на том же элементе, что и отлавливать
+                }
+                else if (e.target.className === editButton.className){
+                    const edit = new Event("edit");
+                    task.dispatchEvent(edit);
                 }
                 else if(e.target.className === task.className){
                     // e.stopImmediatePropagation();
@@ -115,6 +118,7 @@ export default function getApp(){
             input.placeholder = "Add a task";
             input.type = "text";
 
+            input.dataset.mode = "add";
 
             addInputForm.innerHTML = `
                 <div class="input__wrapper">
@@ -125,7 +129,7 @@ export default function getApp(){
             document.querySelector(parentSelector).prepend(addInputForm);
 
             addInputForm.addEventListener("keydown", (e)=>{
-                if (e.target.className === input.className && e.code === "Enter"){
+                if (e.target.className === input.className && e.code === "Enter" && e.target.dataset.mode === "add"){
                     let type = document.querySelector(".nav__item--active").textContent.toLowerCase();
                     let newTask = new Task(e.target.value, type, Math.random().toString(16).slice(2), this.toDoList); // подумать над id
                     postTask("http://localhost:4000/toDo", newTask);
@@ -135,6 +139,7 @@ export default function getApp(){
                     this.reInitFilters(type);
                     this.createListeners(this.toDo);
                     this.renderWindow(this.visibleToDoList);
+                    e.target.value = "";
                 }
             });
             
@@ -177,7 +182,6 @@ export default function getApp(){
         }
 
         
-
         refreshTaskCount(selector, type){
             if(type === "toDo"){
                 document.querySelector(selector).textContent = `Tasks - ${document.querySelector(selector).nextSibling.children.length}`;
@@ -338,7 +342,7 @@ export default function getApp(){
         createListeners(tasksArr){ //создание обработчиков событий для удаления из списка
             // console.log(tasksArr);
             tasksArr.forEach(task => {
-                // console.log(task);
+                
                 task.elem.addEventListener("delete", () => {
                     if(task.isCompleted){
                         this.removeTask(task, this.completed);
@@ -346,6 +350,27 @@ export default function getApp(){
                     else{
                         this.removeTask(task, this.toDo);
                     }
+                });
+
+                task.elem.addEventListener("edit", ()=>{
+                    let input = document.querySelector(".add-form__input");
+                    input.value = task.text;
+                    input.dataset.mode = "edit";
+                    document.querySelector(".add-form__inner").addEventListener("keydown", (e)=>{
+                        if (e.target === input && e.code === "Enter"){
+                            console.log("меняю");
+                            task.text = input.value;
+                            input.value = "";
+                            this.reInitFilters(task.type);
+                            input.dataset.mode = "add";
+                            if (task.isCompleted){
+                                updateTask("http://localhost:4000/completed", task);
+                            }
+                            else{
+                                updateTask("http://localhost:4000/toDo", task);
+                            }
+                        }
+                    });
                 });
 
                 task.elem.addEventListener("changeState", () => {

@@ -576,7 +576,6 @@ ul.footer__contacts {
   background-size: cover;
 }
 .task__edit {
-  display: none;
   cursor: pointer;
   width: 20px;
   height: 20px;

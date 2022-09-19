@@ -40,6 +40,7 @@
     "gulp-zip": "^5.1.0",
     "json-server": "^0.17.0",
     "sass": "^1.52.2",
+    "util": "^0.12.4",
     "webp-converter": "^2.2.3",
     "webpack": "^5.73.0",
     "webpack-stream": "^7.0.0"

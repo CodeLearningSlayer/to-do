@@ -25,13 +25,31 @@ const getTasks = async(url) =>{
 };
 
 const deleteTask = async(url, taskId) => {
-
+    
     const res = await fetch(`${url}/${taskId}`, {
         method: "DELETE",
     });
 
 };
 
+const updateTask = async(url, task) => {
+    let updTask = {
+        text: task.text,
+        id: task.id,
+        type: task.type
+    };
+    const res = await fetch(`${url}/${updTask.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify(updTask)
+    });
+    return await res.json();
+
+};
+
 export {postTask};
 export {getTasks};
 export {deleteTask};
+export {updateTask};

@@ -1,21 +1,10 @@
 {
   "toDo": [
     {
-      "text": "sadsad",
+      "text": "Любимая девочка",
       "type": "daily",
-      "id": "e108423c6c5b7"
+      "id": "32fa40fb1f5de"
     }
   ],
-  "completed": [
-    {
-      "text": "jhghj",
-      "type": "daily",
-      "id": "eb551603837da"
-    },
-    {
-      "text": "hjhgfgf",
-      "type": "today",
-      "id": "a630e70492804"
-    }
-  ]
+  "completed": []
 }
