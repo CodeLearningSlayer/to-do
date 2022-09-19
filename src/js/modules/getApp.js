@@ -1,12 +1,15 @@
-import { getTasks } from "../services/getAndSend.js";
+import { getTasks, postTask } from "../services/getAndSend.js";
+import { deleteTask } from "../services/getAndSend.js";
+
 
 export default function getApp(){
     class Task {
-        constructor(text, type, parentSelector) {
+        constructor(text, type, id, parentSelector) {
             this.text = text;
             this.isCompleted = false;
             this.parent = parentSelector;
             this.type = type;
+            this.id = id;
         }
         render(){
             const task = document.createElement("li");
@@ -44,7 +47,7 @@ export default function getApp(){
            
             //повесить на input?
             task.addEventListener("click", (e) => {
-                console.log(e.target);
+                
                 if (e.target.className === removeButton.className){
                     // task.remove(); // здесь как-то передать this в removeTask
                     const remove = new Event("delete");
@@ -84,12 +87,12 @@ export default function getApp(){
         
     }
     
-    class PlannedTask extends Task{
-        constructor(text, parentSelector, deadline){
-            super(text, parentSelector);
-            this.deadline = deadline;
-        }
-    }
+    // class PlannedTask extends Task{
+    //     constructor(text, parentSelector, deadline){
+    //         super(text, parentSelector);
+    //         this.deadline = deadline;
+    //     }
+    // }
 
     class ToDoList {
         constructor(collectionHtmlElement, collection){ //arrOfTasks приходит с сервера
@@ -124,8 +127,9 @@ export default function getApp(){
             addInputForm.addEventListener("keydown", (e)=>{
                 if (e.target.className === input.className && e.code === "Enter"){
                     let type = document.querySelector(".nav__item--active").textContent.toLowerCase();
-                    let newTask = new Task(e.target.value, type, this.toDoList);
-                    console.log(newTask);
+                    let newTask = new Task(e.target.value, type, Math.random().toString(16).slice(2), this.toDoList); // подумать над id
+                    postTask("http://localhost:4000/toDo", newTask);
+                    // console.log(newTask);
                     this.toDo.push(newTask);
                     // переинициализировать visibleToDoList
                     this.reInitFilters(type);
@@ -275,19 +279,24 @@ export default function getApp(){
                 this.visibleToDoList = this.toDo.filter(task => task.type === type);
                 this.visibleCompletedList = this.completed.filter(task => task.type === type);
             }
+            this.renderList(this.toDo);
+            this.renderList(this.completed);
             this.renderWindow(this.visibleToDoList, this.visibleCompletedList);
         }
 
         createList(data, stateOfTasks){ //создание списка объектов задач
-            data.forEach(task => {
+            data.forEach((task) => {
+                let newTask;
                 if (stateOfTasks === "toDo"){
-                    this.toDo.push(new Task(task.text, task.type, this.toDoList));
+                    newTask = new Task(task.text, task.type, task.id, this.toDoList);
+                    this.toDo.push(newTask);
                 }
                 if (stateOfTasks === "completed"){
-                    let newTask = new Task(task.text, task.type, this.completedList);
+                    newTask = new Task(task.text, task.type, task.id, this.completedList);
                     newTask.isCompleted = true;
                     this.completed.push(newTask);
                 }
+                console.log(newTask);
             });
         }
 
@@ -299,11 +308,16 @@ export default function getApp(){
         removeTask(task, tasksArr){ //работа с dom-деревом
 
             tasksArr.splice(tasksArr.indexOf(task), 1);
-
+            if (!task.isCompleted){
+                deleteTask("http://localhost:4000/toDo", task.id);
+            }
+            else{
+                deleteTask("http://localhost:4000/completed", task.id);
+            }
             this.refreshTaskCount(".tasks__title", "toDo");
             this.refreshTaskCount(".completed__title", "completed");
 
-            console.log(tasksArr);
+            // console.log(tasksArr);
 
             this.reInitFilters(this.currentFilter);
 
@@ -322,7 +336,9 @@ export default function getApp(){
         }
         
         createListeners(tasksArr){ //создание обработчиков событий для удаления из списка
+            // console.log(tasksArr);
             tasksArr.forEach(task => {
+                // console.log(task);
                 task.elem.addEventListener("delete", () => {
                     if(task.isCompleted){
                         this.removeTask(task, this.completed);
@@ -334,18 +350,22 @@ export default function getApp(){
 
                 task.elem.addEventListener("changeState", () => {
                     if(task.isCompleted){
-                        console.log(task.text + " completed");
+                        
                         task.replace(this.completedList);
                         this.completed.push(task);
                         this.toDo.splice(this.toDo.indexOf(task), 1);
+                        console.log(task);
+                        deleteTask("http://localhost:4000/toDo", task.id);
+                        postTask("http://localhost:4000/completed", task);
+                        
                     }
                     else{
-                        
-                        console.log(task.text + " is not completed");
                         this.toDo.push(task);
                         task.replace(this.toDoList);
                         this.completed.splice(this.completed.indexOf(task), 1);
-                        console.log(this.completed + " невыполненные");
+                        deleteTask("http://localhost:4000/completed", task.id);
+                        postTask("http://localhost:4000/toDo", task);
+                        
                     }
                     this.reInitFilters(this.currentFilter);
                 });
@@ -372,8 +392,6 @@ export default function getApp(){
 
     }
     const tasksList = new ToDoList(document.querySelector(".tasks__items"));
-    // const tasksArr = [new Task("Помыть голову", tasksList.list)]; //Должен передаваться в метод, т.к. берётся с сервера
-
-    tasksList.start();
     
+    tasksList.start();
 }
