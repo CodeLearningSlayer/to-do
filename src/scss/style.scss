@@ -179,7 +179,7 @@ body{
     }
     .line-1{
         overflow: hidden;
-        
+        width: max-content;
         border-right: .15em solid #fff;
         white-space: nowrap;
         animation: typing 3s steps(45),
@@ -195,7 +195,8 @@ body{
         width: 0;
         white-space: nowrap;
         &--animated{
-            width: auto;
+            width: max-content;
+
             border-right: .15em solid #fff;
             animation: typing 3s steps(45),
                    blink-caret .5s step-end infinite;
@@ -214,6 +215,18 @@ body{
     }
     &__img{
         margin: 0 auto;
+    }
+}
+
+@keyframes appear {
+    25%{
+        margin-top: -20px;
+        filter: blur(4px);
+    }
+    
+    100%{
+        margin-top: 0px;
+        filter: blur(0);
     }
 }
 

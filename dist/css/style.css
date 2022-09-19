@@ -327,6 +327,7 @@ body.transition::before {
 }
 .content .line-1 {
   overflow: hidden;
+  width: max-content;
   border-right: 0.15em solid #fff;
   white-space: nowrap;
   animation: typing 3s steps(45), blink-caret 0.5s step-end running infinite;
@@ -341,7 +342,7 @@ body.transition::before {
   white-space: nowrap;
 }
 .content .line-2--animated {
-  width: auto;
+  width: max-content;
   border-right: 0.15em solid #fff;
   animation: typing 3s steps(45), blink-caret 0.5s step-end infinite;
 }
@@ -359,6 +360,16 @@ body.transition::before {
   margin: 0 auto;
 }
 
+@keyframes appear {
+  25% {
+    margin-top: -20px;
+    filter: blur(4px);
+  }
+  100% {
+    margin-top: 0px;
+    filter: blur(0);
+  }
+}
 @keyframes typing {
   from {
     width: 0;
@@ -597,4 +608,41 @@ ul.footer__contacts {
 }
 .completed__items {
   text-decoration: line-through;
+}
+
+@media (max-width: 900px) {
+  .content__description {
+    font-size: 40px;
+    line-height: 50px;
+  }
+}
+@media (max-width: 768px) {
+  .content__description {
+    font-size: 32px;
+    line-height: 42px;
+  }
+  .try__link {
+    font-size: 40px;
+  }
+}
+@media (max-width: 595px) {
+  .content {
+    white-space: normal;
+  }
+  .content .line-1,
+.content .line-2 {
+    font-size: 36px;
+    white-space: inherit;
+    width: auto;
+    animation: appear 2s;
+    border-right: none;
+  }
+  .content .line-2 {
+    width: auto;
+  }
+}
+@media (max-width: 495px) {
+  .line-1 {
+    margin-bottom: 15px;
+  }
 }
