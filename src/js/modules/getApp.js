@@ -1,5 +1,5 @@
 import { getTasks, postTask, updateTask, deleteTask } from "../services/getAndSend.js";
-
+import { initSwipe } from "./initSwipe.js";
 
 export default function getApp(){
     class Task {
@@ -128,7 +128,7 @@ export default function getApp(){
 
             document.querySelector(parentSelector).prepend(addInputForm);
 
-            addInputForm.addEventListener("keydown", (e)=>{
+            document.querySelector('.right-side').addEventListener("keydown", (e)=>{
                 if (e.target.className === input.className && e.code === "Enter" && e.target.dataset.mode === "add"){
                     let type = document.querySelector(".nav__item--active").textContent.toLowerCase();
                     let newTask = new Task(e.target.value, type, Math.random().toString(16).slice(2), this.toDoList); // подумать над id
@@ -141,6 +141,7 @@ export default function getApp(){
                     this.renderWindow(this.visibleToDoList);
                     e.target.value = "";
                 }
+                
             });
             
         }
@@ -176,18 +177,49 @@ export default function getApp(){
                 this.createListeners(list);
             });
             
+            this.refreshTaskCount(".tasks__title", "toDo");
+            this.refreshTaskCount(".completed__title", "completed");
+
+        }
+
+        renderEmptyWindow(){
+
+            const emptyWindow = document.createElement("div");
+
+            emptyWindow.className = "list-empty";
+            
+            this.toDoList.innerHTML = "";
+            this.completedList.innerHTML = "";
+
+            emptyWindow.innerHTML = `
+            <div class="list-empty__pic"></div>
+            <div>Your business will be here</div>
+            `;
+
+            this.toDoList.innerHTML = emptyWindow.outerHTML;
 
             this.refreshTaskCount(".tasks__title", "toDo");
             this.refreshTaskCount(".completed__title", "completed");
-        }
 
+
+        }
         
         refreshTaskCount(selector, type){
             if(type === "toDo"){
-                document.querySelector(selector).textContent = `Tasks - ${document.querySelector(selector).nextSibling.children.length}`;
+                if (this.visibleToDoList.length === 0){
+                    document.querySelector(selector).textContent = "";
+                }
+                else{
+                    document.querySelector(selector).textContent = `Tasks - ${document.querySelector(selector).nextSibling.children.length}`;
+                }
             }
             else{
-                document.querySelector(selector).textContent = `Completed - ${document.querySelector(selector).nextSibling.children.length}`;
+                if (this.visibleCompletedList.length === 0){
+                    document.querySelector(selector).textContent = "";
+                }
+                else{
+                    document.querySelector(selector).textContent = `Completed - ${document.querySelector(selector).nextSibling.children.length}`;
+                }
             }
         }
 
@@ -243,11 +275,12 @@ export default function getApp(){
             document.querySelector(parentSelector).append(collections);
 
             collections.addEventListener("click", (e)=>{
-
+                
+                document.querySelector(".left-side").classList.remove("left-side--active");
+                
                 if (e.target.classList.contains("nav__item--daily")){
                     this.currentFilter = "daily";
                     this.reInitFilters("daily");
-
                 }
                 if (e.target.classList.contains("nav__item--today")){
             
@@ -285,7 +318,12 @@ export default function getApp(){
             }
             this.renderList(this.toDo);
             this.renderList(this.completed);
-            this.renderWindow(this.visibleToDoList, this.visibleCompletedList);
+            if (this.visibleToDoList.length > 0 || this.visibleCompletedList.length > 0){
+                this.renderWindow(this.visibleToDoList, this.visibleCompletedList);
+            }
+            else{
+                this.renderEmptyWindow();
+            }
         }
 
         createList(data, stateOfTasks){ //создание списка объектов задач
@@ -340,7 +378,7 @@ export default function getApp(){
         }
         
         createListeners(tasksArr){ //создание обработчиков событий для удаления из списка
-            // console.log(tasksArr);
+
             tasksArr.forEach(task => {
                 
                 task.elem.addEventListener("delete", () => {
@@ -357,19 +395,23 @@ export default function getApp(){
                     input.value = task.text;
                     input.dataset.mode = "edit";
                     document.querySelector(".add-form__inner").addEventListener("keydown", (e)=>{
+                        e.stopPropagation();
                         if (e.target === input && e.code === "Enter"){
-                            console.log("меняю");
-                            task.text = input.value;
-                            input.value = "";
-                            this.reInitFilters(task.type);
-                            input.dataset.mode = "add";
-                            if (task.isCompleted){
-                                updateTask("http://localhost:4000/completed", task);
-                            }
-                            else{
-                                updateTask("http://localhost:4000/toDo", task);
-                            }
+                        console.log("меняю");
+                        task.text = input.value;
+                        input.value = "";
+                        this.reInitFilters(task.type);
+                        input.dataset.mode = "add";
+                        if (task.isCompleted){
+                            updateTask("http://localhost:4000/completed", task);
                         }
+                        else{
+                            updateTask("http://localhost:4000/toDo", task);
+                        }
+                        let clone = document.querySelector(".add-form__inner").cloneNode(true);
+                        document.querySelector(".add-form__inner").replaceWith(clone);
+                    }
+                        // проверка на редактирование
                     });
                 });
 
@@ -379,7 +421,7 @@ export default function getApp(){
                         task.replace(this.completedList);
                         this.completed.push(task);
                         this.toDo.splice(this.toDo.indexOf(task), 1);
-                        console.log(task);
+
                         deleteTask("http://localhost:4000/toDo", task.id);
                         postTask("http://localhost:4000/completed", task);
                         
@@ -402,21 +444,17 @@ export default function getApp(){
         async start(){
             this.createAddInput(".right-side");
             
-            this.createToDoList(".right-side .tasks");
+            this.createToDoList(".tasks");
             this.createCompletedList(".completed");
             
             await this.getData('http://localhost:4000/toDo', "toDo");
             await this.getData('http://localhost:4000/completed', "completed");
             
             this.addCollections(".left-side");
-
-            // this.refreshTaskCount(".tasks__title", "toDo");
-            // this.refreshTaskCount(".completed__title", "completed");
-
+            initSwipe();
         }
 
     }
     const tasksList = new ToDoList(document.querySelector(".tasks__items"));
-    
     tasksList.start();
 }

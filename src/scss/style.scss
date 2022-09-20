@@ -4,6 +4,9 @@
 @import "libs";
 @import "global";
 
+html{
+    overflow-x: hidden;
+}
 
 body{
     overflow-x: hidden;
@@ -24,8 +27,6 @@ body{
             right: 0;
         }
     }
-    
-    
 }
 
 
@@ -294,23 +295,29 @@ ul.footer__contacts{
 }
 
 .app{
-    display: flex;
-    min-height: 100vh;
-    &__left-side{
-        max-width: 400px;
-        background-color: #202020;
+    background-color: #202020;
+    overflow-x: hidden;
+    &__wrapper{
+        display: flex;
+        min-height: 100vh;
+        .left-side{
+            max-width: 400px;
+            background-color: #202020;
+        }
+    
     }
-
+    
 }
 
 .left-side{
     .logo{
         padding: 25px 30px;
-        margin-bottom: 80px;
+        margin-bottom: 40px;
         font-size: 40px;
     }
     .collections{
         padding-left: 25px;
+        padding-right: 50px;
         &__title{
             font-size: 28px;
             margin-bottom: 30px;
@@ -410,12 +417,11 @@ ul.footer__contacts{
 .tasks{
     &__title{
         font-family: NotoSans, serif;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 30px;
         margin-top:25px;
-        font-size: 28px;
+        font-size: 28px; 
     }
-    margin-bottom: 75px;
 }
 
 .task{
@@ -474,6 +480,9 @@ ul.footer__contacts{
         height: 20px;
         background-image: url("@img/task icons/remove.svg");
     }
+    &:last-child{
+        margin-bottom: 75px;
+    }
 }
 
 .completed{
@@ -482,9 +491,29 @@ ul.footer__contacts{
         font-family: NotoSans, serif;
         font-weight: 700;
         margin-bottom: 30px;
+        &--hide{
+            display: none;
+        }
     }
     &__items{
         text-decoration: line-through;
+    }
+}
+
+.list-empty{
+    text-align: center;
+    font-family: NotoSans, serif;
+    font-weight: 700;
+    margin-bottom: 30px;
+    margin-top: 10%;
+    font-size: 30px;
+    &__pic{
+        width: 125px;
+        height: 125px;
+        background-image: url("@img/empty-window.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin: 0 auto 15px;
     }
 }
 
