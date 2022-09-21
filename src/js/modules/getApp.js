@@ -44,11 +44,11 @@ export default function getApp(){
             `;
             
            
-            //повесить на input?
+            
             task.addEventListener("click", (e) => {
                 
                 if (e.target.className === removeButton.className){
-                    // task.remove(); // здесь как-то передать this в removeTask
+                    
                     const remove = new Event("delete");
                     task.dispatchEvent(remove); //запускать на том же элементе, что и отлавливать
                 }
@@ -90,12 +90,7 @@ export default function getApp(){
         
     }
     
-    // class PlannedTask extends Task{
-    //     constructor(text, parentSelector, deadline){
-    //         super(text, parentSelector);
-    //         this.deadline = deadline;
-    //     }
-    // }
+    
 
     class ToDoList {
         constructor(collectionHtmlElement, collection){ //arrOfTasks приходит с сервера
@@ -133,9 +128,9 @@ export default function getApp(){
                     let type = document.querySelector(".nav__item--active").textContent.toLowerCase();
                     let newTask = new Task(e.target.value, type, Math.random().toString(16).slice(2), this.toDoList); // подумать над id
                     postTask("http://localhost:4000/toDo", newTask);
-                    // console.log(newTask);
+                    
                     this.toDo.push(newTask);
-                    // переинициализировать visibleToDoList
+                   
                     this.reInitFilters(type);
                     this.createListeners(this.toDo);
                     this.renderWindow(this.visibleToDoList);
@@ -338,7 +333,6 @@ export default function getApp(){
                     newTask.isCompleted = true;
                     this.completed.push(newTask);
                 }
-                console.log(newTask);
             });
         }
 
@@ -411,7 +405,7 @@ export default function getApp(){
                         let clone = document.querySelector(".add-form__inner").cloneNode(true);
                         document.querySelector(".add-form__inner").replaceWith(clone);
                     }
-                        // проверка на редактирование
+                       
                     });
                 });
 

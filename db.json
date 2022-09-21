@@ -1,4 +1,20 @@
 {
-  "toDo": [],
+  "toDo": [
+    {
+      "text": "Today task",
+      "type": "today",
+      "id": "0d083dda27db9"
+    },
+    {
+      "text": "All of tasks are kept on the server side",
+      "type": "daily",
+      "id": "4f271ec0e3f0a"
+    },
+    {
+      "text": "Let's reboot the page",
+      "type": "daily",
+      "id": "a04223a9b2c3a"
+    }
+  ],
   "completed": []
 }
