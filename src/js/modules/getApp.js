@@ -436,16 +436,19 @@ export default function getApp(){
             
 
         async start(){
-            this.createAddInput(".right-side");
-            
-            this.createToDoList(".tasks");
-            this.createCompletedList(".completed");
-            
-            await this.getData('http://localhost:4000/toDo', "toDo");
-            await this.getData('http://localhost:4000/completed', "completed");
-            
-            this.addCollections(".left-side");
-            initSwipe();
+
+            if(window.location.pathname.split('.')[0].slice(1) === "app"){
+                this.createAddInput(".right-side");            
+                this.createToDoList(".tasks");
+                this.createCompletedList(".completed");
+                
+                await this.getData('http://localhost:4000/toDo', "toDo");
+                await this.getData('http://localhost:4000/completed', "completed");
+                
+                this.addCollections(".left-side");
+                initSwipe();
+            }
+
         }
 
     }

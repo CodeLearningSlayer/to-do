@@ -69,7 +69,6 @@ window.addEventListener("DOMContentLoaded", () => {
     
     getApp();
     
-    // tryLink.addEventListener("click", pageTransition);
 
     function delay(n){
         n = n ?? 2000;
@@ -94,9 +93,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     done();
                 },
                 async beforeEnter(){
-                    scriptInit();
-                    getApp();
-
+                        scriptInit();
+                        getApp();
                 }
             }
         ]
