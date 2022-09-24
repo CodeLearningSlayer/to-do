@@ -7,10 +7,15 @@ A little bit of animations and link to main app above the image
 
 ## Functionality :
 + Add and delete tasks
+
 ![Add and delete](https://github.com/CodeLearningSlayer/to-do/blob/main/gifs/add%20and%20delete.gif)
+
 + Edit task
+
 ![Edit](https://github.com/CodeLearningSlayer/to-do/blob/main/gifs/edit.gif)
+
 + Navigation with filters (daily tasks, today and plans)
+
 ![Navigation](https://github.com/CodeLearningSlayer/to-do/blob/main/gifs/navigation.gif)
 
 ## What did I use
