@@ -3,6 +3,7 @@
 It's simple app that is designed to help with making plans and release them as soon as possible
 ## First page of project
 A little bit of animations and link to main app above the image
+
 ![First page](https://github.com/CodeLearningSlayer/to-do/blob/main/gifs/First%20page.gif)
 
 ## Functionality :
